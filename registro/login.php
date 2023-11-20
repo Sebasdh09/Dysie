@@ -2,7 +2,7 @@
 session_start();
 
 ?>
-<!-- uhihihihi -->
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
