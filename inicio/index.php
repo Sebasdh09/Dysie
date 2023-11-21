@@ -278,7 +278,7 @@ if (isset($_SESSION["success"])) {
 
                     if ($result_tarjetas->num_rows > 0) {
                         while ($row_tarjeta = $result_tarjetas->fetch_assoc()) {
-                            echo '<div class="tarjeta" style="background-color: ' . $row_tarjeta['color'] . ';">';
+                            echo '<div class="tarjeta" style="background-color:white;">';
                             echo '<p class="tarjeta-nombre">' . $row_tarjeta['nom_tarjeta'] . '</p>';
                             
                             // Botón de editar

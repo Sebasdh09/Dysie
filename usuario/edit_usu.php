@@ -30,7 +30,9 @@ function daysDifference($date1, $date2) {
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["edit_account"])) {
     $new_nombre = $_POST["new_nombre"];
-    $new_raw_password = $_POST["new_password"]; // Contraseña sin encriptar
+    $new_raw_password = $_POST["new_password"];
+    $account_id = $_POST["account_id"]; // Agrega esta línea para obtener el account_id
+
 
     // Valida los datos ingresados en el formulario aquí (longitud, formato de correo, etc.)
 
@@ -70,7 +72,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["edit_account"])) {
 }
 
 // Obtener la información del usuario a editar
-if (isset($_GET["id_usuario"])) {
+if (isset($_GET["id_usuario"])) {   
     $account_id = $_GET["id_usuario"];
 
     // Consulta para verificar si el usuario existe
@@ -267,6 +269,7 @@ a {
             echo '</div>';
             unset($_SESSION["success"]);
         }
+
         ?>
 
         <!-- Botón de regreso a la lista de usuarios o al índice -->
