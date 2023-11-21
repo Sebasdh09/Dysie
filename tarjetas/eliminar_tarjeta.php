@@ -37,11 +37,7 @@ if (isset($_GET['id_tarjetas']) && is_numeric($_GET['id_tarjetas'])) {
         // Manejo de errores
         echo "Error al eliminar tarjeta: " . $conn->error;
     }
-} else {
-    // ID de tarjeta no válido
-    echo "ID de tarjeta no válido";
-}
-
+} 
 // Cierra la conexión a la base de datos
 $conn->close();
 ?>
