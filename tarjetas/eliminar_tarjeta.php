@@ -21,12 +21,12 @@ if ($conn->connect_error) {
 }
 
 // Verifica si se proporciona un ID de tarjeta válido
-if (isset($_GET['id_tarjeta']) && is_numeric($_GET['id_tarjeta'])) {
+if (isset($_GET['id_tarjetas']) && is_numeric($_GET['id_tarjetas'])) {
     // Escapa el ID de la tarjeta para evitar inyección de SQL
-    $id_tarjeta = mysqli_real_escape_string($conn, $_GET['id_tarjeta']);
+    $id_tarjeta = mysqli_real_escape_string($conn, $_GET['id_tarjetas']);
 
     // Consulta SQL para eliminar la tarjeta
-    $sql = "DELETE FROM tarjeta WHERE id_tarjeta = $id_tarjeta";
+    $sql = "DELETE FROM tarjeta WHERE id_tarjetas = $id_tarjeta";
 
     // Ejecuta la consulta
     if ($conn->query($sql) === TRUE) {

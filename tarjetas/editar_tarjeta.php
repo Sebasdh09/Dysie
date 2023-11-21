@@ -16,7 +16,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     // Obtiene los datos del formulario
-    $idTarjeta = $_POST['id_tarjeta'];
+    $idTarjeta = $_POST['id_tarjetas'];
     $nuevoNombre = $_POST['nombre_tarjeta'];
 
     // Actualiza el nombre de la tarjeta en la base de datos

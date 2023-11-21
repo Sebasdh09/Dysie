@@ -278,13 +278,11 @@ if (isset($_SESSION["success"])) {
 
                     if ($result_tarjetas->num_rows > 0) {
                         while ($row_tarjeta = $result_tarjetas->fetch_assoc()) {
-                            echo '<div class="tarjeta" style="background-color:white;">';
-                            echo '<p class="tarjeta-nombre">' . $row_tarjeta['nom_tarjeta'] . '</p>';
-                            
+                            echo '<div class="tarjeta" style="background-color: ' . $row_tarjeta['color'] . ';">';                            echo '<p class="tarjeta-nombre">' . $row_tarjeta['nom_tarjeta'] . '</p>';
                             // Botón de editar
-                            echo '<a class="btn-editar-tarjeta btn btn-primary" href="javascript:void(0);" onclick="mostrarEditorTarjeta(\'' . $row_tarjeta['id_tarjeta'] . '\', \'' . $row_tarjeta['nom_tarjeta'] . '\')"><i class="bi bi-pencil-fill"></i> Editar</a>';                            
+                            echo '<a class="btn-editar-tarjeta btn btn-primary" href="javascript:void(0);" onclick="mostrarEditorTarjeta(\'' . $row_tarjeta['id_tarjetas'] . '\', \'' . $row_tarjeta['nom_tarjeta'] . '\')"><i class="bi bi-pencil-fill"></i> Editar</a>';                            
                             // Botón de eliminar
-                            echo '<a class="btn-eliminar-tarjeta btn btn-danger" href="../tarjetas/eliminar_tarjeta.php?id_tarjeta=' . $row_tarjeta['id_tarjeta'] . '">&#10006;</a>';
+                            echo '<a class="btn-eliminar-tarjeta btn btn-danger" href="../tarjetas/eliminar_tarjeta.php?id_tarjetas=' . $row_tarjeta['id_tarjetas'] . '">&#10006;</a>';
                             
                             echo '</div>';
                         }
@@ -340,7 +338,7 @@ if (isset($_SESSION["success"])) {
         <span class="close" onclick="cerrarEditorTarjeta()">&times;</span>
         <h2>Editar Nombre de Tarjeta</h2>
         <form id="formEditarTarjeta" action="../tarjetas/editar_tarjeta.php" method="POST">
-            <input type="hidden" id="editTarjetaId" name="id_tarjeta">
+            <input type="hidden" id="editTarjetaId" name="id_tarjetas">
             <label for="editTarjetaNombre">Nuevo Nombre:</label>
             <input type="text" id="editTarjetaNombre" name="nombre_tarjeta" required>
             <button type="submit">Guardar Cambios</button>
