@@ -184,34 +184,6 @@ color:white;
 
 </style>
 </head>
-
-    <?php
-    // Verificar si hay un mensaje de error en la variable de sesión
-    if (isset($_SESSION["error"])) {
-        echo '<div class="alert alert-danger">';
-        echo $_SESSION["error"];
-        echo '</div>';
-        // Limpia el mensaje de error después de mostrarlo
-        unset($_SESSION["error"]);
-        if (isset($_SESSION["registro_exitoso"]) && $_SESSION["registro_exitoso"]) {
-    echo '<div class="alert alert-success">Registro exitoso. Puedes iniciar sesión ahora.</div>';
-    unset($_SESSION["registro_exitoso"]); // Limpia la variable de sesión
-    
-    if (isset($_SESSION["error"])) {
-    echo '<div class="alert alert-danger">';
-    echo $_SESSION["error"];
-    echo '</div>';
-    unset($_SESSION["error"]);
-}
-if (isset($_SESSION["success"])) {
-    echo '<div class="alert alert-success">';
-    echo $_SESSION["success"];
-    echo '</div>';
-    unset($_SESSION["success"]);
-}
-
-}
-    }?>
     <!-- Responsive navbar-->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <div class="container px-5">
