@@ -87,17 +87,12 @@ if (isset($_GET["id_usuario"])) {
         $nombre = $row["nombre_usu"];
     } else {
         $_SESSION["error"] = "Usuario no encontrado.";
-        header("Location: view_accounts.php");
+        header("Location: edit_usu.php");
         exit();
     }
 
     $stmt_check->close();
-} else {
-    // Si no hay id_usuario en la URL, redirige o maneja la situación de alguna manera
-    $_SESSION["error"] = "ID de usuario no proporcionado.";
-    header("Location: edit_usu.php");
-    exit();
-}
+} 
 
 
 // Cerrar la conexión a la base de datos
