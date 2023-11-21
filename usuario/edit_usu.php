@@ -56,16 +56,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["edit_account"])) {
         $sql = "UPDATE usuario SET nombre_usu = ?,  contra = ?, fecha_update = ? WHERE id_usuario = ?";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("ssii", $new_nombre, $new_password, $current_date, $account_id);
-
+    
         if ($stmt->execute()) {
             $_SESSION["success"] = "Usuario actualizado con éxito.";
+    
+            // Guarda el nuevo nombre en la variable de sesión
+            $_SESSION["new_nombre"] = $new_nombre;
         } else {
             throw new Exception("Error al actualizar el usuario: " . $stmt->error);
         }
     } catch (Exception $e) {
         $_SESSION["success"] = "Usuario actualizado con éxito.";
     }
-
+    
     // Redirige a la página donde se listan los usuarios o al índice
     header("Location: edit_usu.php");
     exit();
@@ -245,27 +248,33 @@ a {
         <h2>Editar Usuario</h2>
 
         <!-- Formulario para editar el usuario -->
-        <form method="post" action="./edit_usu.php">
-            <label for="new_nombre">Nuevo Nombre:</label>
-            <input type="text" name="new_nombre" value="<?php echo $nombre; ?>" required>
+<form method="post" action="./edit_usu.php">
+    <label for="new_nombre">Nuevo Nombre:</label>
+    <input type="text" name="new_nombre" value="<?php echo isset($nombre) ? $nombre : ''; ?>" required>
 
-            <label for="new_password">Nueva Contraseña:</label>
-            <input type="password" name="new_password" minlength="8" required>
+    <label for="new_password">Nueva Contraseña:</label>
+    <input type="password" name="new_password" minlength="8" required>
 
-            <input type="hidden" name="account_id" value="<?php echo $account_id; ?>">
+    <input type="hidden" name="account_id" value="<?php echo $account_id; ?>">
 
-            <button type="submit" name="edit_account">Guardar Cambios</button>
-        </form>
+    <button type="submit" name="edit_account">Guardar Cambios</button>
+</form>
 
         <?php
-        if (isset($_SESSION["success"])) {
-            echo '<div class="alert alert-success">';
-            echo $_SESSION["success"];
-            echo '</div>';
-            unset($_SESSION["success"]);
-        }
+if (isset($_SESSION["success"])) {
+    echo '<div class="alert alert-success">';
+    echo $_SESSION["success"];
+    echo '</div>';
 
-        ?>
+    // Muestra el nuevo nombre si está definido
+    if (isset($_SESSION["new_nombre"])) {
+        echo '<p>Nuevo nombre: ' . $_SESSION["new_nombre"] . '</p>';
+        unset($_SESSION["new_nombre"]);
+    }
+
+    unset($_SESSION["success"]);
+}
+?>
 
         <!-- Botón de regreso a la lista de usuarios o al índice -->
         <a class="btn-back" href="view_accounts.php">Regresar al perfil</a>
