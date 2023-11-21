@@ -17,7 +17,6 @@ if (isset($_GET["id_usuario"])) {
     $sql = "DELETE FROM usuario WHERE id_usuario = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("i", $account_id);
-
     if ($stmt->execute()) {
         $_SESSION["success"] = "Usuario eliminado con éxito.";
     } else {

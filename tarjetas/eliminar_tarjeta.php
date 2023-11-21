@@ -14,8 +14,8 @@ $username = "root";
 $password = "";
 $dbname = "dysie";
 
+// Manejo de errores en la conexión
 $conn = new mysqli($servername, $username, $password, $dbname);
-
 if ($conn->connect_error) {
     die("Conexión fallida: " . $conn->connect_error);
 }
@@ -25,7 +25,6 @@ if (isset($_GET['id_tarjetas']) && is_numeric($_GET['id_tarjetas'])) {
     // Usa una sentencia preparada para evitar la inyección de SQL
     $id_tarjeta = $_GET['id_tarjetas'];
 
-
     // Consulta SQL para eliminar la tarjeta principal
     $sql = "DELETE FROM tarjeta WHERE id_tarjetas = ?";
     $stmt = $conn->prepare($sql);
@@ -33,18 +32,17 @@ if (isset($_GET['id_tarjetas']) && is_numeric($_GET['id_tarjetas'])) {
 
     // Ejecuta la consulta principal
     if ($stmt->execute()) {
+        // Cierra la sentencia preparada
+        $stmt->close();
+        
         // Redirige a la página de inicio después de la eliminación exitosa
         header("Location: ../inicio/index.php");
         exit();
     } else {
-        // Manejo de errores
-        echo "Error al eliminar tarjeta: " . $stmt->error;
+        // Manejo de errores: registra el error en un archivo de registro
+        error_log("Error al eliminar tarjeta: " . $stmt->error);
     }
-
-    // Cierra las sentencias preparadas
-    $stmt_dependencias->close();
-    $stmt->close();
-} 
+}
 
 // Cierra la conexión a la base de datos
 $conn->close();
