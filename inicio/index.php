@@ -319,14 +319,59 @@ color:white;
 </div>
 
 <script>
-    function mostrarEditorTarjeta(idTarjeta, nombreTarjeta) {
-    document.getElementById('editTarjetaId').value = idTarjeta;
-    document.getElementById('editTarjetaNombre').value = nombreTarjeta;
-    document.getElementById('modalEditarTarjeta').style.display = 'block';
+    function mostrarEditor(idTablero, nombreTablero, colorTablero) {
+    document.getElementById('editTableroId').value = idTablero;
+    document.getElementById('editTableroNombre').value = nombreTablero;
+
+    // Selecciona la opción correspondiente en la lista desplegable
+    var select = document.getElementById('editTableroColor');
+    for (var i = 0; i < select.options.length; i++) {
+        if (select.options[i].value === colorTablero) {
+            select.selectedIndex = i;
+            break;
+        }
+    }
+
+    document.getElementById('modalEditar').style.display = 'block';
 }
 
 function cerrarEditor() {
     document.getElementById('modalEditar').style.display = 'none';
+}
+
+function guardarCambios() {
+    var form = document.getElementById('formEditarTablero');
+    var formData = new FormData(form);
+
+    // Realiza una solicitud AJAX para enviar los datos al servidor PHP
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", "../tableros/editar_tablero.php", true);
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+            // Analiza la respuesta JSON del servidor
+            var response = JSON.parse(xhr.responseText);
+            if (response.success) {
+                // Actualiza el color en tiempo real en el tablero
+                var idTablero = document.getElementById('editTableroId').value;
+                var tableroTitle = document.getElementById('tablero-title-' + idTablero);
+                tableroTitle.style.backgroundColor = response.color;
+            } else {
+                console.error("Error al guardar cambios: " + response.error);
+            }
+
+            // Cierra el formulario emergente
+            cerrarEditor();
+        }
+    };
+    xhr.send(formData);
+}
+</script>
+<!-- Aqui esta el de las tarjetas -->
+<script>
+    function mostrarEditorTarjeta(idTarjeta, nombreTarjeta) {
+    document.getElementById('editTarjetaId').value = idTarjeta;
+    document.getElementById('editTarjetaNombre').value = nombreTarjeta;
+    document.getElementById('modalEditarTarjeta').style.display = 'block';
 }
 function guardarCambiosTarjeta() {
     var form = document.getElementById('formEditarTarjeta');
@@ -351,46 +396,6 @@ function guardarCambiosTarjeta() {
     };
     xhr.send(formData);
 }
-
-</script>
-<script>
-    function mostrarEditorTarjeta(idTarjeta, nombreTarjeta) {
-        document.getElementById('editTarjetaId').value = idTarjeta;
-        document.getElementById('editTarjetaNombre').value = nombreTarjeta;
-
-        document.getElementById('modalEditarTarjeta').style.display = 'block';
-    }
-
-    function cerrarEditorTarjeta() {
-        document.getElementById('modalEditarTarjeta').style.display = 'none';
-    }
-
-    function guardarCambiosTarjeta() {
-        var form = document.getElementById('formEditarTarjeta');
-        var formData = new FormData(form);
-
-        // Realiza una solicitud AJAX para enviar los datos al servidor PHP
-        var xhr = new XMLHttpRequest();
-        xhr.open("POST", "../tarjetas/editar_tarjeta.php", true);
-        xhr.onreadystatechange = function () {
-            if (xhr.readyState == 4 && xhr.status == 200) {
-                // Analiza la respuesta JSON del servidor
-                var response = JSON.parse(xhr.responseText);
-                if (response.success) {
-                    // Actualiza el nombre en tiempo real en la tarjeta
-                    var idTarjeta = document.getElementById('editTarjetaId').value;
-                    var tarjetaNombre = document.querySelector('.tarjeta-nombre[data-id="' + idTarjeta + '"]');
-                    tarjetaNombre.innerHTML = response.nombre;
-                } else {
-                    console.error("Error al guardar cambios: " + response.error);
-                }
-
-                // Cierra el formulario emergente
-                cerrarEditorTarjeta();
-            }
-        };
-        xhr.send(formData);
-    }
 </script>
 <!-- Scripts al final del documento -->
 <script>
