@@ -1,6 +1,5 @@
 <?php
 session_start();
-include_once "config.php";
 
 // Verifica si el usuario ha iniciado sesión
 if (!isset($_SESSION['email'])) {
@@ -8,6 +7,19 @@ if (!isset($_SESSION['email'])) {
     header("Location: login.php");
     exit();
 }
+
+
+    // Conexión a la base de datos (debes configurar tus propios valores)
+    $servername = "localhost";
+    $username = "root";
+    $password = "";
+    $dbname = "dysie";
+
+    $conn = new mysqli($servername, $username, $password, $dbname);
+
+    if ($conn->connect_error) {
+        die("Conexión fallida: " . $conn->connect_error);
+    }
 
 // Verifica si se ha proporcionado un ID de usuario para eliminar
 if (isset($_GET["id_usuario"])) {
@@ -30,6 +42,6 @@ if (isset($_GET["id_usuario"])) {
 $conn->close();
 
 // Redirige de nuevo a la lista de usuarios
-header("Location: login.php");
+header("Location: ../registro/login.php");
 exit();
 ?>
