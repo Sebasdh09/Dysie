@@ -366,26 +366,6 @@ function guardarCambios() {
     xhr.send(formData);
 }
 </script>
-<script>
-    function mostrarEditor(idTablero, nombreTablero, colorTablero) {
-    document.getElementById('editTableroId').value = idTablero;
-    document.getElementById('editTableroNombre').value = nombreTablero;
-
-    // Selecciona la opción correspondiente en la lista desplegable
-    var select = document.getElementById('editTableroColor');
-    for (var i = 0; i < select.options.length; i++) {
-        if (select.options[i].value === colorTablero) {
-            select.selectedIndex = i;
-            break;
-        }
-    }
-
-    document.getElementById('modalEditar').style.display = 'block';
-}
-    function cerrarEditorTarjeta() {
-        document.getElementById('modalEditarTarjeta').style.display = 'none';
-    }
-</script>
 <!-- Scripts al final del documento -->
 <script>
         // Deshabilita el botón de retroceso del navegador
