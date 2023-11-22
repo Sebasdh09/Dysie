@@ -259,7 +259,8 @@ a {
 
     <button type="submit" name="edit_account">Guardar Cambios</button>
 </form>
-
+        <!-- Botón de regreso a la lista de usuarios o al índice -->
+        <a class="btn-back" href="view_accounts.php">Regresar al perfil</a>
         <?php
 if (isset($_SESSION["success"])) {
     echo '<div class="alert alert-success">';
@@ -275,9 +276,6 @@ if (isset($_SESSION["success"])) {
     unset($_SESSION["success"]);
 }
 ?>
-
-        <!-- Botón de regreso a la lista de usuarios o al índice -->
-        <a class="btn-back" href="view_accounts.php">Regresar al perfil</a>
     </div>
     <!-- Footer-->
     <footer class="py-5 bg-dark">
