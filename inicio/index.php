@@ -250,12 +250,12 @@ color:white;
 
                     if ($result_tarjetas->num_rows > 0) {
                         while ($row_tarjeta = $result_tarjetas->fetch_assoc()) {
-                            echo '<div class="tarjeta" style="background-color: ' . $row_tarjeta['color'] . ';">';                            echo '<p class="tarjeta-nombre">' . $row_tarjeta['nom_tarjeta'] . '</p>';
-                            // Botón de editar
-                            echo '<a class="btn-editar-tarjeta btn btn-primary" href="javascript:void(0);" onclick="mostrarEditorTarjeta(\'' . $row_tarjeta['id_tarjetas'] . '\', \'' . $row_tarjeta['nom_tarjeta'] . '\')"><i class="bi bi-pencil-fill"></i> Editar</a>';                            
-                            // Botón de eliminar
+                            echo '<div class="tarjeta" id="tarjeta-' . $row_tarjeta['id_tarjetas'] . '" style="background-color: ' . $row_tarjeta['color'] . ';">';
+                            echo '<p class="tarjeta-nombre">' . $row_tarjeta['nom_tarjeta'] . '</p>';
+                            echo '<div class="botones-tarjeta">';
+                            echo '<a class="btn-editar-tarjeta btn btn-primary" href="javascript:void(0);" onclick="mostrarEditorTarjeta(\'' . $row_tarjeta['id_tarjetas'] . '\', \'' . $row_tarjeta['nom_tarjeta'] . '\')"><i class="bi bi-pencil-fill"></i> Editar</a>';
                             echo '<a class="btn-eliminar-tarjeta btn btn-danger" href="../tarjetas/eliminar_tarjeta.php?id_tarjetas=' . $row_tarjeta['id_tarjetas'] . '">&#10006;</a>';
-                            
+                            echo '</div>';
                             echo '</div>';
                         }
                         
@@ -310,80 +310,86 @@ color:white;
         <span class="close" onclick="cerrarEditorTarjeta()">&times;</span>
         <h2>Editar Nombre de Tarjeta</h2>
         <form id="formEditarTarjeta" action="../tarjetas/editar_tarjeta.php" method="POST">
-            <input type="hidden" id="editTarjetaId" name="id_tarjetas">
-            <label for="editTarjetaNombre">Nuevo Nombre:</label>
-            <input type="text" id="editTarjetaNombre" name="nombre_tarjeta" required>
-            <button type="submit">Guardar Cambios</button>
-        </form>
+    <input type="hidden" id="editTarjetaId" name="id_tarjetas">
+    <label for="editTarjetaNombre">Nuevo Nombre:</label>
+    <input type="text" id="editTarjetaNombre" name="nombre_tarjeta" required>
+    <button type="button" onclick="guardarCambiosTarjeta()">Guardar Cambios</button>
+</form>
     </div>
 </div>
 
 <script>
-    function mostrarEditor(idTablero, nombreTablero, colorTablero) {
-    document.getElementById('editTableroId').value = idTablero;
-    document.getElementById('editTableroNombre').value = nombreTablero;
-
-    // Selecciona la opción correspondiente en la lista desplegable
-    var select = document.getElementById('editTableroColor');
-    for (var i = 0; i < select.options.length; i++) {
-        if (select.options[i].value === colorTablero) {
-            select.selectedIndex = i;
-            break;
-        }
-    }
-
-    document.getElementById('modalEditar').style.display = 'block';
+    function mostrarEditorTarjeta(idTarjeta, nombreTarjeta) {
+    document.getElementById('editTarjetaId').value = idTarjeta;
+    document.getElementById('editTarjetaNombre').value = nombreTarjeta;
+    document.getElementById('modalEditarTarjeta').style.display = 'block';
 }
 
 function cerrarEditor() {
     document.getElementById('modalEditar').style.display = 'none';
 }
-
-function guardarCambios() {
-    var form = document.getElementById('formEditarTablero');
+function guardarCambiosTarjeta() {
+    var form = document.getElementById('formEditarTarjeta');
     var formData = new FormData(form);
 
-    // Realiza una solicitud AJAX para enviar los datos al servidor PHP
     var xhr = new XMLHttpRequest();
-    xhr.open("POST", "../tableros/editar_tablero.php", true);
+    xhr.open("POST", "../tarjetas/editar_tarjeta.php", true);
     xhr.onreadystatechange = function () {
         if (xhr.readyState == 4 && xhr.status == 200) {
-            // Analiza la respuesta JSON del servidor
             var response = JSON.parse(xhr.responseText);
             if (response.success) {
-                // Actualiza el color en tiempo real en el tablero
-                var idTablero = document.getElementById('editTableroId').value;
-                var tableroTitle = document.getElementById('tablero-title-' + idTablero);
-                tableroTitle.style.backgroundColor = response.color;
+                // Actualiza el nombre de la tarjeta en tiempo real
+                var idTarjeta = response.idTarjeta;
+                var tarjetaNombre = document.getElementById('tarjeta-' + idTarjeta).getElementsByClassName('tarjeta-nombre')[0];
+                tarjetaNombre.textContent = response.nombreTarjeta;
             } else {
-                console.error("Error al guardar cambios: " + response.error);
+                console.error("Error al guardar cambios en la tarjeta: " + response.error);
             }
 
-            // Cierra el formulario emergente
-            cerrarEditor();
+            cerrarEditorTarjeta();
         }
     };
     xhr.send(formData);
 }
+
 </script>
 <script>
-    function mostrarEditor(idTablero, nombreTablero, colorTablero) {
-    document.getElementById('editTableroId').value = idTablero;
-    document.getElementById('editTableroNombre').value = nombreTablero;
+    function mostrarEditorTarjeta(idTarjeta, nombreTarjeta) {
+        document.getElementById('editTarjetaId').value = idTarjeta;
+        document.getElementById('editTarjetaNombre').value = nombreTarjeta;
 
-    // Selecciona la opción correspondiente en la lista desplegable
-    var select = document.getElementById('editTableroColor');
-    for (var i = 0; i < select.options.length; i++) {
-        if (select.options[i].value === colorTablero) {
-            select.selectedIndex = i;
-            break;
-        }
+        document.getElementById('modalEditarTarjeta').style.display = 'block';
     }
 
-    document.getElementById('modalEditar').style.display = 'block';
-}
     function cerrarEditorTarjeta() {
         document.getElementById('modalEditarTarjeta').style.display = 'none';
+    }
+
+    function guardarCambiosTarjeta() {
+        var form = document.getElementById('formEditarTarjeta');
+        var formData = new FormData(form);
+
+        // Realiza una solicitud AJAX para enviar los datos al servidor PHP
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "../tarjetas/editar_tarjeta.php", true);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                // Analiza la respuesta JSON del servidor
+                var response = JSON.parse(xhr.responseText);
+                if (response.success) {
+                    // Actualiza el nombre en tiempo real en la tarjeta
+                    var idTarjeta = document.getElementById('editTarjetaId').value;
+                    var tarjetaNombre = document.querySelector('.tarjeta-nombre[data-id="' + idTarjeta + '"]');
+                    tarjetaNombre.innerHTML = response.nombre;
+                } else {
+                    console.error("Error al guardar cambios: " + response.error);
+                }
+
+                // Cierra el formulario emergente
+                cerrarEditorTarjeta();
+            }
+        };
+        xhr.send(formData);
     }
 </script>
 <!-- Scripts al final del documento -->

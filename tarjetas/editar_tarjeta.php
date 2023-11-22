@@ -20,7 +20,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $nuevoNombre = $_POST['nombre_tarjeta'];
 
     // Actualiza el nombre de la tarjeta en la base de datos
-    $sql = "UPDATE tarjeta SET nom_tarjeta = '$nuevoNombre' WHERE id_tarjeta = '$idTarjeta'";
+    $sql = "UPDATE tarjeta SET nom_tarjeta = '$nuevoNombre' WHERE id_tarjetas = '$idTarjeta'";
 
     if ($conn->query($sql) === TRUE) {
         // Redirige a la página principal después de editar la tarjeta (ajusta la URL según tu estructura)
