@@ -114,6 +114,10 @@ body {
     font-family: Arial, sans-serif;
             background-color: #6c757d;
             margin: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        height: 100vh;
 }
 
 
@@ -121,7 +125,7 @@ body {
 h2 {
     text-align: center;
     color: white;
-    margin-top: 50px;
+    margin-top: 1%;
 }
 
 /* Formulario */
@@ -221,7 +225,6 @@ a {
         }
         footer {
         background-color: black;
-        position: absolute;
         bottom: 0;
         width: 100%;
         height: 40px;

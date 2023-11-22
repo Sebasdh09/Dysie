@@ -52,6 +52,10 @@ $result = $conn->query($sql);
         }
         body{
         background:#6c757d;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        height: 100vh;
         }
 
         .board {
