@@ -38,4 +38,3 @@ if (isset($_GET['id_tablero'])) {
     header("Location: ../inicio/index.php");
     exit();
 }
-?>

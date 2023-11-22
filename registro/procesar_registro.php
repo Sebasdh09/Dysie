@@ -25,7 +25,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Conectar a la base de datos y realizar la inserción
     $servername = "localhost";
-    $username = "root"; 
+    $username = "root";
     $password = "";
     $dbname = "dysie";
 
@@ -49,7 +49,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         // Conectar a la base de datos y realizar la inserción
         $servername = "localhost";
-        $username = "root"; 
+        $username = "root";
         $password = "";
         $dbname = "dysie";
 
@@ -106,4 +106,3 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     header("Location: login.php");
     exit();
 }
-?>

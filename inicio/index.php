@@ -185,6 +185,15 @@ color:white;
     margin: 0; /* Ajusta el margen del texto para evitar espacio adicional */
 }
 
+.botones-tarjeta {
+    background-color: transparent;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: stretch;
+    width: 96%;
+}
+
 
 </style>
 </head>
@@ -205,7 +214,7 @@ color:white;
         </nav>
 </head>
 <body>
-<div class="container">
+<div class="container ">
     <div class="board">
         <h1>Tableros</h1>
         <form action="../tableros/guardar_tablero.php" method="POST">
@@ -257,7 +266,7 @@ color:white;
                             echo '<div class="tarjeta" id="tarjeta-' . $row_tarjeta['id_tarjetas'] . '" style="background-color: ' . $row_tarjeta['color'] . ';">';
                             echo '<p class="tarjeta-nombre">' . $row_tarjeta['nom_tarjeta'] . '</p>';
                             echo '<div class="botones-tarjeta">';
-                            echo '<a class="btn-editar-tarjeta btn btn-primary" href="javascript:void(0);" onclick="mostrarEditorTarjeta(\'' . $row_tarjeta['id_tarjetas'] . '\', \'' . $row_tarjeta['nom_tarjeta'] . '\')"><i class="bi bi-pencil-fill"></i> Editar</a>';
+                            echo '<a class="btn-editar-tarjeta" href="javascript:void(0);" onclick="mostrarEditorTarjeta(\'' . $row_tarjeta['id_tarjetas'] . '\', \'' . $row_tarjeta['nom_tarjeta'] . '\')"><i class="bi bi-pencil-fill"></i> Editar</a>';
                             echo '<a class="btn-eliminar-tarjeta btn btn-danger" href="../tarjetas/eliminar_tarjeta.php?id_tarjetas=' . $row_tarjeta['id_tarjetas'] . '">&#10006;</a>';
                             echo '</div>';
                             echo '</div>';
