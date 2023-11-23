@@ -91,7 +91,7 @@ $result = $conn->query($sql);
     right: 5px; /* Ajusta la distancia desde la derecha */
 }
 .btn-delete:hover{
-  background: none;
+background: none;
 }
 
 .btn-editar {
@@ -151,29 +151,42 @@ color:white;
         color:black;
 }
 /* Estilos para los botones de editar y eliminar en las tarjetas */
-/* Estilos para los botones de editar y eliminar en las tarjetas */
 .botones-tarjeta {
     position: absolute;
     top: 5px;
     right: 5px;
+    display: flex;
+    gap: 5px; /* Espacio entre los botones */
+    background-color: transparent;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: stretch;
+    width: 96%;
 }
 
 .btn-editar-tarjeta,
 .btn-eliminar-tarjeta {
-    display: inline-block;
-    padding: 5px;
-    margin-right: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px 5px;
     border-radius: 5px;
     text-decoration: none;
-    color: #fff;
+    color: #000; /* Color del texto */
+    background-color: #fff; /* Color de fondo */
+    border: 1px solid #ccc; /* Borde */
+    cursor: pointer;
 }
 
-.btn-editar-tarjeta {
-    background-color: #007bff; /* Color azul para el botón de editar */
+.btn-editar-tarjeta:hover,
+.btn-eliminar-tarjeta:hover {
+    background-color: #ddd; /* Cambia el color de fondo al pasar el mouse */
 }
 
-.btn-eliminar-tarjeta {
-    background-color: #dc3545; /* Color rojo para el botón de eliminar */
+.btn-editar-tarjeta i,
+.btn-eliminar-tarjeta i {
+    margin-right: 5px; /* Espacio entre el icono y el texto */
 }
 
 /* Ajuste para la alineación del texto en la tarjeta */
@@ -183,26 +196,106 @@ color:white;
 
 .tarjeta-nombre {
     margin: 0; /* Ajusta el margen del texto para evitar espacio adicional */
-}
-
-.botones-tarjeta {
-    background-color: transparent;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: stretch;
-    width: 96%;
+    font-size: 15px;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+    padding-left: 20%;
 }
 
 
+
+#nueva_tarjeta{
+    margin-top: 2%;
+}
+/* Estilo para las ventanas emergentes */
+.modal {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    width: 300px;
+    max-width: 80%; /* Ajusta según sea necesario */
+    max-height: 50%;
+}
+
+.modal-content {
+    padding: 20px;
+    border: 0px;
+}
+
+.close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 20px;
+    color: #777;
+    cursor: pointer;
+}
+
+/* Estilo para los formularios dentro de las ventanas emergentes */
+.modal form {
+    margin-top: 15px;
+}
+
+.modal form label {
+    display: block;
+    margin-bottom: 8px;
+    color: #555;
+}
+
+.modal form input[type="text"] {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.modal form select {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.modal form button {
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.modal form button:hover {
+    background-color: #0056b3;
+}
+
+/* Estilo para los contenidos dentro de las ventanas emergentes */
+.modal h2 {
+    color: #333;
+    margin-bottom: 15px;
+}
+.color-tablero{
+    color: white;
+    size: 122px;
+}
 </style>
 </head>
     <!-- Responsive navbar-->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <div class="container px-5">
-                <a class="logo" href="index.php">
-        <img src="../assets/Dysie (3).png" alt="">
-    </a>
+            <a class="logo" href="index.php">
+    <img src="../assets/Dysie (3).png" alt="">
+</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
@@ -219,7 +312,7 @@ color:white;
         <h1>Tableros</h1>
         <form action="../tableros/guardar_tablero.php" method="POST">
     <input type="text" name="nombre-tablero" placeholder="Nombre del tablero" required><br><br>
-    <label for="color-tablero">Color Del Tablero:</label>
+    <label for="color-tablero" class="color-tablero">Color Del Tablero:</label>
     <select name="color-tablero" required>
     <option value="#B0C4DE">Azul Acero</option>
     <option value="#BC8F8F">Rosado Rosáceo</option>
@@ -277,7 +370,7 @@ color:white;
                     }
 
                     // Formulario para agregar tarjetas (asegúrate de incluir el ID del tablero)
-                    echo '<form action="../tarjetas/agregar_tarjeta.php" method="POST">';
+                    echo '<form action="../tarjetas/agregar_tarjeta.php" method="POST" id="nueva_tarjeta">';
                     echo '<input type="hidden" name="id_tablero" value="' . $idTablero . '">';
                     echo '<input type="text" name="nombre-tarjeta" placeholder="Nombre de la tarjeta" required>';
                     echo '<button class="btn-tarjeta" type="submit">Agregar tarjeta</button>';

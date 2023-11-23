@@ -267,7 +267,7 @@ session_start();
     ?>
     <!-- Logo -->
     <div class="logo">
-        <img src="../assets/Dysie (5).png" alt="">
+        <a href="../index.html"><img src="../assets/Dysie (5).png" alt=""></a>
     </div>
     <main>
         <div class="contenedor__todo">
